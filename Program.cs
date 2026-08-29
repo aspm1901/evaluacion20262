@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TecnoGasHogar.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +12,7 @@ builder.Services.AddDbContext<TecnoGasContext>(options =>
 
 var app = builder.Build();
 
-// Aplicar migraciones pendientes automáticamente al iniciar
+// Aplicar migraciones e inicializar datos de prueba automáticamente al arrancar
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -20,11 +20,12 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<TecnoGasContext>();
         context.Database.Migrate();
+        DbInitializer.Initialize(context);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Error al aplicar migraciones en SQLite.");
+        logger.LogError(ex, "Ocurrió un error al aplicar las migraciones o poblar la base de datos.");
     }
 }
 
