@@ -1,0 +1,141 @@
+@model TecnoGasHogar.Models.SolicitudServicio
+
+@{
+    ViewData["Title"] = "Registrar Nueva Solicitud";
+}
+
+<div class="py-3">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+            <!-- Breadcrumb Navigation -->
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <a asp-action="Index" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-1">
+                    <i class="bi bi-arrow-left"></i> Volver a Solicitudes
+                </a>
+                <span class="text-muted small">/</span>
+                <span class="text-primary small fw-semibold">Nuevo Registro</span>
+            </div>
+
+            <div class="custom-card shadow-sm border-0">
+                <!-- Header -->
+                <div class="p-4 bg-white border-bottom">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-2.5 py-1 rounded-pill small mb-1">
+                                <i class="bi bi-file-earmark-plus me-1"></i> Formulario de Atención
+                            </span>
+                            <h3 class="fw-bold text-dark mb-1 tracking-tight">Nueva Solicitud de Servicio</h3>
+                            <p class="text-muted small mb-0">
+                                Ingrese los datos del cliente y el requerimiento técnico para artefactos a gas.
+                            </p>
+                        </div>
+                        <div class="d-none d-sm-block">
+                            <div class="stat-icon-wrapper bg-warning bg-opacity-10 text-warning" style="width: 48px; height: 48px;">
+                                <i class="bi bi-tools fs-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Body -->
+                <div class="p-4 p-md-5 bg-white">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3 mb-4 small" role="alert"></div>
+
+                        <!-- Sección 1: Datos del Cliente -->
+                        <div class="mb-4">
+                            <h6 class="text-uppercase text-primary fw-bold small tracking-wider mb-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-person-badge"></i> 1. Información del Cliente
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="Cliente" class="form-label-custom">
+                                        Nombre Completo <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-icon-group">
+                                        <i class="bi bi-person"></i>
+                                        <input asp-for="Cliente" class="form-control form-control-custom" placeholder="Ej. Juan Pérez Gómez" />
+                                    </div>
+                                    <span asp-validation-for="Cliente" class="text-danger small mt-1 d-block"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="Telefono" class="form-label-custom">
+                                        Teléfono de Contacto <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-icon-group">
+                                        <i class="bi bi-telephone"></i>
+                                        <input asp-for="Telefono" class="form-control form-control-custom" placeholder="Ej. 987654321" />
+                                    </div>
+                                    <span asp-validation-for="Telefono" class="text-danger small mt-1 d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25" />
+
+                        <!-- Sección 2: Detalle del Servicio -->
+                        <div class="mb-4">
+                            <h6 class="text-uppercase text-primary fw-bold small tracking-wider mb-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-wrench-adjustable"></i> 2. Detalle del Servicio Técnico
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="Distrito" class="form-label-custom">
+                                        Distrito <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-icon-group">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <input asp-for="Distrito" class="form-control form-control-custom" placeholder="Ej. San Borja, Surco, Miraflores" />
+                                    </div>
+                                    <span asp-validation-for="Distrito" class="text-danger small mt-1 d-block"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="TipoServicio" class="form-label-custom">
+                                        Tipo de Servicio <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-icon-group">
+                                        <i class="bi bi-tag"></i>
+                                        <select asp-for="TipoServicio" class="form-select form-select-custom ps-5">
+                                            <option value="">-- Seleccione Tipo de Servicio --</option>
+                                            <option value="Instalación">Instalación (Terma, Cocina, Red interna)</option>
+                                            <option value="Mantenimiento">Mantenimiento preventivo / correctivo</option>
+                                            <option value="Revisión">Revisión técnica de presión / diagnóstico</option>
+                                            <option value="Fuga">Fuga de gas (Emergencia)</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="TipoServicio" class="text-danger small mt-1 d-block"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Descripcion" class="form-label-custom">
+                                        Descripción o Especificaciones del Pedido
+                                    </label>
+                                    <textarea asp-for="Descripcion" class="form-control form-control-custom" rows="3" 
+                                              placeholder="Indique detalles como modelo de artefacto, marca (Bosch, Sole, etc.) o detalles de la falla..."></textarea>
+                                    <span asp-validation-for="Descripcion" class="text-danger small mt-1 d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Actions -->
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top flex-wrap gap-2">
+                            <a asp-action="Index" class="btn btn-light px-4 py-2 text-muted fw-semibold border">
+                                <i class="bi bi-x-circle me-1"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-gradient-primary px-4 py-2.5 d-inline-flex align-items-center gap-2">
+                                <i class="bi bi-check2-circle fs-5"></i>
+                                <span>Guardar Solicitud de Servicio</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

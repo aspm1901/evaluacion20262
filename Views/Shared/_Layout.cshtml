@@ -1,47 +1,85 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TecnoGasHogar</title>
+    <title>@ViewData["Title"] - TecnoGas Hogar</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TecnoGasHogar.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TecnoGasHogar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-tecnogas shadow-sm">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Solicitudes" asp-action="Index">
+                    <div class="navbar-brand-logo">
+                        <i class="bi bi-fire"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-5 text-white tracking-tight lh-1">
+                            TecnoGas <span class="text-warning">Hogar</span>
+                        </span>
+                        <span class="text-light opacity-50" style="font-size: 0.7rem; letter-spacing: 0.05em;">SERVICIOS A GAS</span>
+                    </div>
+                </a>
+
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+                    <ul class="navbar-nav ms-lg-4 gap-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link nav-link-custom d-flex align-items-center gap-2 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")" 
+                               asp-controller="Solicitudes" asp-action="Index">
+                                <i class="bi bi-card-checklist"></i>
+                                <span>Listado de Solicitudes</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link nav-link-custom d-flex align-items-center gap-2 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Create" ? "active" : "")" 
+                               asp-controller="Solicitudes" asp-action="Create">
+                                <i class="bi bi-plus-circle"></i>
+                                <span>Nueva Solicitud</span>
+                            </a>
                         </li>
                     </ul>
+
+                    <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                        <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill bg-dark bg-opacity-50 border border-secondary border-opacity-25 text-light small">
+                            <span class="pulse-dot"></span>
+                            <span style="font-size: 0.78rem; font-weight: 500;">Portal Interno Operativo</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="container my-4 flex-grow-1">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-tecnogas mt-auto">
         <div class="container">
-            &copy; 2026 - TecnoGasHogar - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-shield-check text-success"></i>
+                    <span><strong>TecnoGas Hogar</strong> &copy; 2026 - Evaluación Continua 1</span>
+                </div>
+                <div class="text-muted small">
+                    ASP.NET Core 10 MVC &bull; Entity Framework Core &bull; SQLite
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
