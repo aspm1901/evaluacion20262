@@ -1,0 +1,222 @@
+@model IEnumerable<TecnoGasHogar.Models.SolicitudServicio>
+
+@{
+    ViewData["Title"] = "Listado de Solicitudes";
+    var totalSolicitudes = Model?.Count() ?? 0;
+    var totalInstalaciones = Model?.Count(s => s.TipoServicio == "Instalación") ?? 0;
+    var totalMantenimientos = Model?.Count(s => s.TipoServicio == "Mantenimiento") ?? 0;
+    var totalEmergencias = Model?.Count(s => s.TipoServicio == "Fuga") ?? 0;
+}
+
+<div class="py-2">
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success border-0 shadow-sm rounded-4 p-3 mb-4 alert-dismissible fade show d-flex align-items-center" role="alert">
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                <i class="bi bi-check-lg fs-5"></i>
+            </div>
+            <div class="flex-grow-1">
+                <h6 class="mb-0 fw-bold text-success">¡Operación Exitosa!</h6>
+                <div class="text-dark small">@TempData["Mensaje"]</div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Header & Quick Stats -->
+    <div class="row align-items-center mb-4 g-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-2.5 py-1 rounded-pill small">
+                    <i class="bi bi-database-check me-1"></i> SQLite Database
+                </span>
+            </div>
+            <h2 class="fw-bold mb-1 text-dark tracking-tight">Portal de Solicitudes</h2>
+            <p class="text-muted mb-0 small">
+                Gestión y seguimiento en tiempo real de pedidos de servicio técnico a gas.
+            </p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a asp-action="Create" class="btn btn-gradient-warning px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-2">
+                <i class="bi bi-plus-circle-fill fs-5"></i>
+                <span class="fs-6">Nueva Solicitud</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-inbox-fill"></i>
+                </div>
+                <div>
+                    <div class="text-muted small fw-medium">Total Pedidos</div>
+                    <div class="fs-4 fw-bold text-dark">@totalSolicitudes</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-gear-fill"></i>
+                </div>
+                <div>
+                    <div class="text-muted small fw-medium">Instalaciones</div>
+                    <div class="fs-4 fw-bold text-dark">@totalInstalaciones</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper bg-warning bg-opacity-10 text-warning">
+                    <i class="bi bi-wrench-adjustable-circle-fill"></i>
+                </div>
+                <div>
+                    <div class="text-muted small fw-medium">Mantenimientos</div>
+                    <div class="fs-4 fw-bold text-dark">@totalMantenimientos</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card d-flex align-items-center gap-3">
+                <div class="stat-icon-wrapper bg-danger bg-opacity-10 text-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div>
+                    <div class="text-muted small fw-medium">Fugas / Urgencias</div>
+                    <div class="fs-4 fw-bold text-dark">@totalEmergencias</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card Container -->
+    <div class="custom-card">
+        <div class="p-3.5 px-4 bg-white border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h5 class="mb-0 fw-bold text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-table text-primary"></i>
+                    Registros en Base de Datos
+                </h5>
+            </div>
+            <span class="text-muted small">
+                <i class="bi bi-arrow-down-up me-1"></i> Ordenado por fecha descendente
+            </span>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="custom-table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;"># ID</th>
+                            <th>Cliente</th>
+                            <th>Teléfono</th>
+                            <th>Distrito</th>
+                            <th>Tipo de Servicio</th>
+                            <th>Descripción</th>
+                            <th class="text-end">Fecha Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var initial = !string.IsNullOrWhiteSpace(item.Cliente) ? item.Cliente.Substring(0, 1).ToUpper() : "C";
+                            <tr>
+                                <td>
+                                    <span class="badge bg-light text-muted border px-2 py-1 rounded-3 fw-mono">
+                                        #@item.Id
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2.5">
+                                        <div class="client-avatar">@initial</div>
+                                        <div>
+                                            <div class="fw-bold text-dark">@item.Cliente</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="tel:@item.Telefono" class="text-decoration-none text-secondary d-inline-flex align-items-center gap-1.5 fw-medium">
+                                        <i class="bi bi-telephone text-muted small"></i>
+                                        <span>@item.Telefono</span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="d-inline-flex align-items-center gap-1 text-dark small fw-medium">
+                                        <i class="bi bi-geo-alt-fill text-danger small"></i>
+                                        @item.Distrito
+                                    </span>
+                                </td>
+                                <td>
+                                    @switch (item.TipoServicio)
+                                    {
+                                        case "Instalación":
+                                            <span class="badge-service badge-service-instalacion">
+                                                <i class="bi bi-gear-fill"></i> Instalación
+                                            </span>
+                                            break;
+                                        case "Mantenimiento":
+                                            <span class="badge-service badge-service-mantenimiento">
+                                                <i class="bi bi-wrench"></i> Mantenimiento
+                                            </span>
+                                            break;
+                                        case "Revisión":
+                                            <span class="badge-service badge-service-revision">
+                                                <i class="bi bi-search"></i> Revisión
+                                            </span>
+                                            break;
+                                        case "Fuga":
+                                            <span class="badge-service badge-service-fuga">
+                                                <i class="bi bi-exclamation-octagon-fill"></i> Fuga
+                                            </span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary">@item.TipoServicio</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(item.Descripcion))
+                                    {
+                                        <span class="text-dark small" style="max-width: 280px; display: inline-block; word-break: break-word;">
+                                            @item.Descripcion
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic small">Sin observaciones adicionales</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <div class="text-dark small fw-medium">
+                                        @item.FechaRegistro.ToString("dd/MM/yyyy")
+                                    </div>
+                                    <div class="text-muted" style="font-size: 0.75rem;">
+                                        <i class="bi bi-clock me-1"></i>@item.FechaRegistro.ToString("HH:mm")
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5 px-4">
+                <div class="stat-icon-wrapper bg-light text-muted mx-auto mb-3" style="width: 64px; height: 64px; font-size: 2rem;">
+                    <i class="bi bi-inbox"></i>
+                </div>
+                <h5 class="fw-bold text-dark">Aún no hay solicitudes registradas</h5>
+                <p class="text-muted small mb-4">Comience registrando el primer pedido de servicio técnico de gas.</p>
+                <a asp-action="Create" class="btn btn-gradient-primary">
+                    <i class="bi bi-plus-circle me-1"></i> Registrar Primera Solicitud
+                </a>
+            </div>
+        }
+    </div>
+</div>
