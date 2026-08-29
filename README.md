@@ -1,5 +1,11 @@
 # Portal de Solicitudes de Servicio Técnico - TecnoGas Hogar
 
+[![Live Demo](https://img.shields.io/badge/Render-Live%20Demo-success?logo=render&style=for-the-badge)](https://evaluacion20262-kr3z.onrender.com)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-evaluacion20262-blue?logo=github&style=for-the-badge)](https://github.com/aspm1901/evaluacion20262)
+
+> 🌐 **Aplicación en Vivo (Render):** [https://evaluacion20262-kr3z.onrender.com](https://evaluacion20262-kr3z.onrender.com)  
+> 📦 **Repositorio Oficial:** [https://github.com/aspm1901/evaluacion20262](https://github.com/aspm1901/evaluacion20262)
+
 **Evaluación Continua 1** | Programación I  
 Aplicación web MVC desarrollada en **.NET 10 (C#)** con persistencia en **Entity Framework Core + SQLite**, control de versiones con **Git Flow en GitHub** y despliegue en la nube mediante **Docker en Render**.
 
