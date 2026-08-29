@@ -123,8 +123,3 @@ ENTRYPOINT ["dotnet", "TecnoGasHogar.dll"]
 6. Render construirá la imagen Docker y publicará la aplicación en una URL accesible públicamente.
 
 ---
-
-## 📝 7. Entregables
-
-- **Repositorio GitHub:** [https://github.com/aspm1901/evaluacion20262](https://github.com/aspm1901/evaluacion20262)
-- **URL Pública en Render:** `[Ingresar URL generada por Render aquí]`
